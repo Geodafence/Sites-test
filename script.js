@@ -1,14 +1,22 @@
 let image = new Image()
 image.src = './boat asset.png';
+let gradient1 = 248
+let gradient2 = 219
+let gradient3 = 0
+let goal = 0
+let gradientgoals = [[248,219,0],[0, 248, 244],[0, 2, 136],[0, 0, 0]]
 setInterval(() => {
     let watercanvas = document.getElementById("Water").getElementsByClassName("watercanvas")[0];
     const ctx = watercanvas.getContext("2d");
     const imglayer = watercanvas.getContext("2d")
-    ctx.fillStyle = "black"
+    
+    updateGradient()
+    console.log(gradient1,gradient2,gradient3,goal)
+    ctx.fillStyle = `rgba(${gradient1}, ${gradient2}, ${gradient3}, 1)`
     ctx.beginPath();
     ctx.fillRect(0,0,window.innerWidth, window.innerHeight)
     ctx.stroke();
-    ctx.strokeStyle = "rgba(0, 4, 248, 1)";
+    ctx.strokeStyle = "rgba(248, 219, 0, 1)";
     ctx.fillStyle = "rgba(0, 4, 248, 1)";
     let d = new Date();
     let t = d.getTime();
@@ -50,4 +58,33 @@ function angle(cx, cy, ex, ey) {
 function getwaveinc(num) {
     console.log(Math.abs(200*(num/200)))
     return Math.abs(80*(num/200))
+}
+function updateGradient() {
+  if(gradient1===gradientgoals[goal][0]&&gradient2===gradientgoals[goal][1]&&gradient3===gradientgoals[goal][2]) {
+    goal = (goal+1)%gradientgoals.length
+  }
+  if(gradient1 < gradientgoals[goal][0]) {
+    gradient1 += 1
+  }
+  if(gradient1 > gradientgoals[goal][0]) {
+    gradient1 -= 1
+  }
+
+  if(gradient2 < gradientgoals[goal][1]) {
+    gradient2 += 1
+  }
+  if(gradient2 > gradientgoals[goal][1]) {
+    gradient2 -= 1
+  }
+
+  if(gradient3 < gradientgoals[goal][2]) {
+    gradient3 += 1
+  }
+  if(gradient3 > gradientgoals[goal][2]) {
+    gradient3 -= 1
+  }
+
+  gradient1 = gradient1%255
+  gradient2 = gradient2%255
+  gradient2 = gradient2%255
 }
